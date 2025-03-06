@@ -126,4 +126,4 @@ if random_airports:
             print(f"Matkasi jatkuu lentokentälle: {valittu_airport}")
             break
         else:
-            print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
+            print("Ei löydy lentokenttää, valitse numeroista 1, 2 tai 3.")
