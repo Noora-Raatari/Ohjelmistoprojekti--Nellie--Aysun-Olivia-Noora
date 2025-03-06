@@ -1,6 +1,6 @@
+import mysql.connector
 import random
 
-import mysql.connector
 def hae_kysymys(id):
     sql = (f"SELECT kysymys from kysymykset where id={id}")
     print (sql)
@@ -42,3 +42,19 @@ def tulosta_ohjeet ():
         time.sleep(1)
 
 tulosta_ohjeet()
+
+
+class Karma:
+    def __init__(self):
+        self.pisteet = 100
+
+    def vastaus(self, oikein: bool):
+        if oikein:
+            self.pisteet += 10
+            print("Oikein! +20 karmaa.")
+        else:
+            self.pisteet -= 20
+            print("Väärin! -20 karmaa.")
+        print(f"Sinulla on nyt {self.pisteet} karmaa.\n")
+
+karma = Karma()
