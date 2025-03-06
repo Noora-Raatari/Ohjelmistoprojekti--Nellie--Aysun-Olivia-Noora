@@ -39,15 +39,20 @@ def hae_vastaus(id):
     tulos=kursori.fetchall()
     if kursori.rowcount > 0:
       for i in tulos:
-        oikea_vastaus_str=i
+        oikea_vastaus_str = i[0].strip().lower()
+        print(oikea_vastaus_str)
+    else:
+      print("Vastausta ei löytynyt")
+      return None
     return oikea_vastaus_str
 
 def vastausvaihtoehdot():
-    pelaajan_vastaus = str (input("Onko väite totta vai tarua?:"))
-    if pelaajan_vastaus != "":
-            pass
-    else:
-        print("Anna kelvollinen vastaus")
+    while True:
+        pelaajan_vastaus = input("Onko väite totta vai tarua?: ").strip().lower()
+        if pelaajan_vastaus in ['totta', 'tarua']:
+            return pelaajan_vastaus
+        else:
+            print("Vastaus ei ole kelvollinen. Yritä uudelleen.")
     return pelaajan_vastaus
 
 def choose_airport():
@@ -69,7 +74,7 @@ yhteys = mysql.connector.connect(
          port= 3306,
          database='peli',
          user='root',
-         password='tuut',
+         password='läppäri',
          autocommit=True
          )
 
@@ -82,45 +87,28 @@ pelaajan_vastaus = vastausvaihtoehdot()
 oikea_vastaus = hae_vastaus(arvottu_numero)
 choose_airport()
 
-import random
+'''if pelaajan_vastaus==oikea_vastaus:
+    print("Jee oikein")
+else:
+    print("väärin :(")'''
+
+
 class Karma:
     def __init__(self):
         self.pisteet = 100
-    def hae_kysymys(id):
-            sql = (f"SELECT kysymys from kysymykset where id={id}")
-            # print (sql)
-            kursori = yhteys.cursor()
-            kursori.execute(sql)
-            tulos = kursori.fetchall()
-            if kursori.rowcount > 0:
-                for i in tulos:
-                    print(f" {i}")
 
-    def hae_vastaus(id):
-             sql = (f"SELECT vastaus from kysymykset where id={id}")
-                # print (sql)
-             kursori = yhteys.cursor()
-             kursori.execute(sql)
-             tulos = kursori.fetchall()
-                if kursori.rowcount > 0:
-                    for i in tulos:
-                        oikea_vastaus_str = i
-                return oikea_vastaus_st
-     def vastausvaihtoehdot():
-    pelaajan_vastaus = str (input("Onko väite totta vai tarua?:"))
-    if pelaajan_vastaus != "":
-            pass
-    else:
-        print("Anna kelvollinen vastaus")
-    return pelaajan_vastaus
-
-         if pelaajan_vastaus == oikea_vastaus:
+    def update_karma(self, correct: bool):
+        if correct:
             self.pisteet += 20
             print("Oikein! +20 karmaa.")
         else:
             self.pisteet -= 20
             print("Väärin! -20 karmaa.")
-
         print(f"Sinulla on nyt {self.pisteet} karmaa.\n")
 
 karma = Karma()
+if pelaajan_vastaus == oikea_vastaus:
+    karma.update_karma(True)
+else:
+    karma.update_karma(False)
+
