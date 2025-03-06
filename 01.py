@@ -50,6 +50,18 @@ def vastausvaihtoehdot():
         print("Anna kelvollinen vastaus")
     return pelaajan_vastaus
 
+def choose_airport():
+    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
+    print(airport)
+    kursori = yhteys.cursor()
+    kursori.execute(airport)
+    airport = kursori.fetchall()
+    random_airports = random.sample(airport, 3)
+    vastaus = []
+    for rivi in random_airports:
+        vastaus.append(rivi[0])
+    print(vastaus)
+
 '''tässä on tietokantayhteys'''
 
 yhteys = mysql.connector.connect(
@@ -57,17 +69,18 @@ yhteys = mysql.connector.connect(
          port= 3306,
          database='peli',
          user='root',
-         password='läppäri',
+         password='tuut',
          autocommit=True
          )
 
 '''tästä alkaa pääohjelma'''
 
 tulosta_ohjeet()
-arvottu_numero= random.randint(1,3)
+arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot().upper().lower()
 oikea_vastaus = hae_vastaus(arvottu_numero).upper().lower()
+choose_airport()
 
 
 class Karma:
