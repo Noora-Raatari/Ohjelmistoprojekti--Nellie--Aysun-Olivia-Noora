@@ -86,8 +86,35 @@ import random
 class Karma:
     def __init__(self):
         self.pisteet = 100
+    def hae_kysymys(id):
+            sql = (f"SELECT kysymys from kysymykset where id={id}")
+            # print (sql)
+            kursori = yhteys.cursor()
+            kursori.execute(sql)
+            tulos = kursori.fetchall()
+            if kursori.rowcount > 0:
+                for i in tulos:
+                    print(f" {i}")
 
-        if pelaajan_vastaus == oikea_vastaus:
+    def hae_vastaus(id):
+             sql = (f"SELECT vastaus from kysymykset where id={id}")
+                # print (sql)
+             kursori = yhteys.cursor()
+             kursori.execute(sql)
+             tulos = kursori.fetchall()
+                if kursori.rowcount > 0:
+                    for i in tulos:
+                        oikea_vastaus_str = i
+                return oikea_vastaus_st
+     def vastausvaihtoehdot():
+    pelaajan_vastaus = str (input("Onko väite totta vai tarua?:"))
+    if pelaajan_vastaus != "":
+            pass
+    else:
+        print("Anna kelvollinen vastaus")
+    return pelaajan_vastaus
+
+         if pelaajan_vastaus == oikea_vastaus:
             self.pisteet += 20
             print("Oikein! +20 karmaa.")
         else:
