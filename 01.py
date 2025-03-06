@@ -84,17 +84,10 @@ hae_vastaus()
 tarkista_vastaus()
 choose_airport()
 
-
+import random
 class Karma:
     def __init__(self):
         self.pisteet = 100
-    def hae_vastaus(self,numero):
-        vaihtoehdot = [hae_kysymys()]
-        return random.choice(vaihtoehdot)
-
-    def tarkista_vastaus(self,arvottu_numero):
-        oikea_vastaus = self.hae_vastaus(arvottu_numero)
-        pelaajan_vastaus = self.vastausvaihtoehdot()
 
         if pelaajan_vastaus == oikea_vastaus:
             self.pisteet += 20
