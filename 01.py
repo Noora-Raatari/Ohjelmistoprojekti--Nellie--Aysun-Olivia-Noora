@@ -65,17 +65,38 @@ pelaajan_vastaus = vastausvaihtoehdot()
 
 
 
+import random
+
 class Karma:
     def __init__(self):
         self.pisteet = 100
 
-    def vastaus(self, oikein: bool):
-        if oikein:
-            self.pisteet += 10
+    def hae_vastaus(self, numero):
+        kysymykset = {
+        hae_kysymys(arvottu_numero)
+        }
+        return kysymykset.get(numero, None)
+
+    def vastausvaihtoehdot(self):
+        vaihtoehdot = ["Totta, Tarua"]
+        return random.choice(vaihtoehdot).lower()
+
+    def tarkista_vastaus(self, arvottu_numero):
+        oikea_vastaus = self.hae_vastaus(arvottu_numero).lower()
+        pelaajan_vastaus = self.vastausvaihtoehdot()
+
+        print(f"Kysymys {arvottu_numero}: Oikea vastaus on {oikea_vastaus}. Pelaajan vastaus: {pelaajan_vastaus}")
+
+        if pelaajan_vastaus == oikea_vastaus:
+            self.pisteet += 20
             print("Oikein! +20 karmaa.")
         else:
             self.pisteet -= 20
             print("Väärin! -20 karmaa.")
+
         print(f"Sinulla on nyt {self.pisteet} karmaa.\n")
 
 karma = Karma()
+for _ in range(47):
+    arvottu_numero = random.randint(1, 47)
+    karma.tarkista_vastaus(arvottu_numero)
