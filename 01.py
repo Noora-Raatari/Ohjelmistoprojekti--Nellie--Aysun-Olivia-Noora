@@ -112,3 +112,30 @@ if pelaajan_vastaus == oikea_vastaus:
 else:
     karma.update_karma(False)
 
+#Lentokenttä#
+
+def choose_airport():
+    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
+    print(airport)
+    kursori = yhteys.cursor()
+    kursori.execute(airport)
+    airport = kursori.fetchall()
+    random_airports = random.sample(airport, 3)
+    jono = 1
+    for kenttä in random_airports:
+        print(f"{jono}. {kenttä[0]}")
+        jono += 1
+
+    return random_airports
+
+random_airports = choose_airport()
+
+if random_airports:
+    while True:
+        valitse = int(input("(1-3): "))
+        if 1 <= valitse <= 3:
+            valittu_airport = random_airports[valitse - 1][0]
+            print(f"Matkasi jatkuu lentokentälle: {valittu_airport}")
+            break
+        else:
+            print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
