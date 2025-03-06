@@ -2,7 +2,7 @@ import mysql.connector
 import random
 import time
 
-'''tässä on funktiot'''
+''''tässä on funktiot'''
 
 def tulosta_ohjeet ():
     ohjeet = [
