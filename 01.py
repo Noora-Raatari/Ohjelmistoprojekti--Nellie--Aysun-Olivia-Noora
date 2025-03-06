@@ -2,7 +2,7 @@ import mysql.connector
 import random
 import time
 
-''''tässä on funktiot'''
+'''tässä on funktiot'''
 
 def tulosta_ohjeet ():
     ohjeet = [
@@ -66,8 +66,8 @@ yhteys = mysql.connector.connect(
 tulosta_ohjeet()
 arvottu_numero= random.randint(1,3)
 hae_kysymys(arvottu_numero)
-pelaajan_vastaus = vastausvaihtoehdot()
-oikea_vastaus = hae_vastaus(arvottu_numero)
+pelaajan_vastaus = vastausvaihtoehdot().upper().lower()
+oikea_vastaus = hae_vastaus(arvottu_numero).upper().lower()
 
 
 class Karma:
