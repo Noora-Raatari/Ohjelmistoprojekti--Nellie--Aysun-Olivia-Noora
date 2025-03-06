@@ -1,7 +1,8 @@
 import mysql.connector
 import random
 import time
-#tässä on funktiot
+
+'''tässä on funktiot'''
 
 def tulosta_ohjeet ():
     ohjeet = [
@@ -49,7 +50,8 @@ def vastausvaihtoehdot():
         print("Anna kelvollinen vastaus")
     return pelaajan_vastaus
 
-#tässä on tietokantayhteys
+'''tässä on tietokantayhteys'''
+
 yhteys = mysql.connector.connect(
          host='localhost',
          port= 3306,
@@ -58,16 +60,15 @@ yhteys = mysql.connector.connect(
          password='läppäri',
          autocommit=True
          )
+
+'''tästä alkaa pääohjelma'''
+
 tulosta_ohjeet()
 arvottu_numero= random.randint(1,3)
 hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
 oikea_vastaus = hae_vastaus(arvottu_numero)
 
-
-
-
-import random
 
 class Karma:
     def __init__(self):
