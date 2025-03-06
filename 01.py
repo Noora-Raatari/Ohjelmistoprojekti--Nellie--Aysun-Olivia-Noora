@@ -78,8 +78,8 @@ yhteys = mysql.connector.connect(
 tulosta_ohjeet()
 arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
-pelaajan_vastaus = vastausvaihtoehdot().upper().lower()
-oikea_vastaus = hae_vastaus(arvottu_numero).upper().lower()
+pelaajan_vastaus = vastausvaihtoehdot()
+oikea_vastaus = hae_vastaus(arvottu_numero)
 choose_airport()
 
 
