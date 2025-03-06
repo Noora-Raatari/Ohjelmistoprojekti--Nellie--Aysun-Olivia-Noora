@@ -55,17 +55,6 @@ def vastausvaihtoehdot():
             print("Vastaus ei ole kelvollinen. Yritä uudelleen.")
     return pelaajan_vastaus
 
-def choose_airport():
-    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
-    print(airport)
-    kursori = yhteys.cursor()
-    kursori.execute(airport)
-    airport = kursori.fetchall()
-    random_airports = random.sample(airport, 3)
-    vastaus = []
-    for rivi in random_airports:
-        vastaus.append(rivi[0])
-    print(vastaus)
 
 '''tässä on tietokantayhteys'''
 
@@ -85,7 +74,6 @@ arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
 oikea_vastaus = hae_vastaus(arvottu_numero)
-choose_airport()
 
 '''if pelaajan_vastaus==oikea_vastaus:
     print("Jee oikein")
