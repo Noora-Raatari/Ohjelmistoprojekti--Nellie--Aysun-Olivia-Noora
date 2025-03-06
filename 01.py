@@ -80,8 +80,8 @@ arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
 oikea_vastaus = hae_vastaus(arvottu_numero)
-hae_vastaus(self,numero)
-tarkista_vastaus(self,arvottu_numero)
+hae_vastaus()
+tarkista_vastaus()
 choose_airport()
 
 
