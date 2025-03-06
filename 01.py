@@ -17,11 +17,11 @@ def tulosta_ohjeet ():
     ]
     for ohje in ohjeet:
         print(ohje)
-        time.sleep(1)
+        time.sleep(0)
 
 def hae_kysymys(id):
     sql = (f"SELECT kysymys from kysymykset where id={id}")
-    print (sql)
+    #print (sql)
     kursori =yhteys.cursor()
     kursori.execute(sql)
     tulos=kursori.fetchall()
@@ -32,19 +32,21 @@ def hae_kysymys(id):
         print ("")
 def hae_vastaus(id):
     sql = (f"SELECT vastaus from kysymykset where id={id}")
-    print (sql)
+    #print (sql)
     kursori =yhteys.cursor()
     kursori.execute(sql)
     tulos=kursori.fetchall()
     if kursori.rowcount > 0:
       for i in tulos:
         oikea_vastaus_str=i
-        print (oikea_vastaus_str)
     return oikea_vastaus_str
 
 def vastausvaihtoehdot():
-    # print (f"Valitse oikea vaihtoehto: \n 1. Totta \n 2. Tarua" )
     pelaajan_vastaus = str (input("Onko väite totta vai tarua?:"))
+    if pelaajan_vastaus != "":
+            pass
+    else:
+        print("Anna kelvollinen vastaus")
     return pelaajan_vastaus
 
 #tässä on tietokantayhteys
@@ -59,9 +61,9 @@ yhteys = mysql.connector.connect(
 tulosta_ohjeet()
 arvottu_numero= random.randint(1,3)
 hae_kysymys(arvottu_numero)
-vastausvaihtoehdot()
-oikea_vastaus = hae_vastaus(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
+oikea_vastaus = hae_vastaus(arvottu_numero)
+
 
 
 
@@ -70,22 +72,6 @@ import random
 class Karma:
     def __init__(self):
         self.pisteet = 100
-
-    def hae_vastaus(self, numero):
-        kysymykset = {
-        hae_kysymys(arvottu_numero)
-        }
-        return kysymykset.get(numero, None)
-
-    def vastausvaihtoehdot(self):
-        vaihtoehdot = ["Totta, Tarua"]
-        return random.choice(vaihtoehdot).lower()
-
-    def tarkista_vastaus(self, arvottu_numero):
-        oikea_vastaus = self.hae_vastaus(arvottu_numero).lower()
-        pelaajan_vastaus = self.vastausvaihtoehdot()
-
-        print(f"Kysymys {arvottu_numero}: Oikea vastaus on {oikea_vastaus}. Pelaajan vastaus: {pelaajan_vastaus}")
 
         if pelaajan_vastaus == oikea_vastaus:
             self.pisteet += 20
@@ -97,6 +83,3 @@ class Karma:
         print(f"Sinulla on nyt {self.pisteet} karmaa.\n")
 
 karma = Karma()
-for _ in range(47):
-    arvottu_numero = random.randint(1, 47)
-    karma.tarkista_vastaus(arvottu_numero)
