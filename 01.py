@@ -71,41 +71,6 @@ yhteys = mysql.connector.connect(
 
 tulosta_ohjeet()
 
-'''Lentokenttä'''
-
-def choose_airport():
-    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
-    print(airport)
-    kursori = yhteys.cursor()
-    kursori.execute(airport)
-    airport = kursori.fetchall()
-    random_airports = random.sample(airport, 3)
-    jono = 1
-    print(f"Valitse seuraava kohteesi!")
-    for kenttä in random_airports:
-        print(f"{jono}. {kenttä[0]}")
-        jono += 1
-
-    return random_airports
-
-random_airports = choose_airport()
-
-if random_airports:
-    while True:
-        valitse = int(input("(1-3): "))
-        if 1 <= valitse <= 3:
-            valittu_airport = random_airports[valitse - 1][0]
-            print(f"Matkasi jatkuu lentokentälle: {valittu_airport}")
-            break
-        else:
-            print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
-
-
-arvottu_numero= random.randint(1,47)
-hae_kysymys(arvottu_numero)
-pelaajan_vastaus = vastausvaihtoehdot()
-oikea_vastaus = hae_vastaus(arvottu_numero)
-
 '''if pelaajan_vastaus==oikea_vastaus:
     print("Jee oikein")
 else:
@@ -124,6 +89,57 @@ class Karma:
             self.pisteet -= 20
             print("Väärin! -20 karmaa.")
         print(f"Sinulla on nyt {self.pisteet} karmaa.\n")
+
+    def lento(self):
+        if self.pisteet >= 10:
+            self.pisteet -= 10
+            print("Lentosi hinta: -10 karmaa.")
+            print(f"Sinulla on nyt {self.pisteet} karmaa.")
+        else:
+            print("Ei tarpeeksi karmaa lentämiseen!")
+            return False
+        return True
+
+'''Lentokenttä'''
+
+def choose_airport():
+    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
+    print(airport)
+    kursori = yhteys.cursor()
+    kursori.execute(airport)
+    airport = kursori.fetchall()
+    random_airports = random.sample(airport, 3)
+    jono = 1
+    print(f"Valitse seuraava kohteesi!")
+    for kenttä in random_airports:
+        print(f"{jono}. {kenttä[0]}")
+        jono += 1
+
+    return random_airports
+
+karma = Karma()
+random_airports = choose_airport()
+
+if random_airports:
+    while True:
+        valitse = int(input("(1-3): "))
+        if 1 <= valitse <= 3:
+            valittu_airport = random_airports[valitse - 1][0]
+            print(f"Matkasi jatkuu lentokentälle: {valittu_airport}")
+            if karma.lento():
+                break
+            else:
+                print("Ei tarpeeksi karmaa lentämiseen, et voi lentää.")
+                break
+        else:
+            print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
+
+
+arvottu_numero= random.randint(1,47)
+hae_kysymys(arvottu_numero)
+pelaajan_vastaus = vastausvaihtoehdot()
+oikea_vastaus = hae_vastaus(arvottu_numero)
+
 
 karma = Karma()
 if pelaajan_vastaus == oikea_vastaus:
