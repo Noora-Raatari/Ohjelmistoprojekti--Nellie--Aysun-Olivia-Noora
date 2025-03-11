@@ -147,3 +147,4 @@ if pelaajan_vastaus == oikea_vastaus:
 else:
     karma.update_karma(False)
 
+
