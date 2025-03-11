@@ -102,13 +102,14 @@ class Karma:
 
 class puu:
     def __init__(self):
-        self.puut = 5
-        def update_puut(self, correct: bool):
-            if correct:
-                self.puut += 1
-                print(f"Istutit kentällä puun!")
-            else:
-                print(f"Et pysty kasvattamaan kentällä puuta :(")
+        self.puut = 0
+    def update_puut(self, correct: bool):
+        if correct:
+            self.puut += 1
+            print(f"Istutit kentällä puun!")
+        else:
+            self.puut += 0
+            print(f"Et pysty kasvattamaan kentällä puuta :(")
 
 '''Lentokenttä'''
 
@@ -150,7 +151,7 @@ def puu():
     if puu in random_airports:
         return
 
-puu()
+
 
 arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
@@ -164,4 +165,9 @@ if pelaajan_vastaus == oikea_vastaus:
 else:
     karma.update_karma(False)
 
+puu = puu()
 
+if pelaajan_vastaus == oikea_vastaus:
+    puu.update_puut(True)
+else:
+    puu.update_puut(False)
