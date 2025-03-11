@@ -156,29 +156,29 @@ puu = Puu()
 #while
 
     #Pelaaja saa valita lentokentän
-    pelaajan_sijainti= choose_airport()
+pelaajan_sijainti= choose_airport()
 
     #tarksitetaan onko kentällä puuta istutettavaksi
-    mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
+mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
 
     #Arvotaan kysymyspulma
-    arvottu_numero= random.randint(1,47)
-    hae_kysymys(arvottu_numero)
+arvottu_numero= random.randint(1,47)
+hae_kysymys(arvottu_numero)
 
     #pelaaja vastaa
-    pelaajan_vastaus = vastausvaihtoehdot()
-    oikea_vastaus = hae_vastaus(arvottu_numero)
+pelaajan_vastaus = vastausvaihtoehdot()
+oikea_vastaus = hae_vastaus(arvottu_numero)
 
     #Tarkistetaan onko pelaajan vastaus ja päivitetään karma
-    if pelaajan_vastaus == oikea_vastaus:
-        karma.update_karma(True)
-    else:
-        karma.update_karma(False)
+if pelaajan_vastaus == oikea_vastaus:
+    karma.update_karma(True)
+else:
+    karma.update_karma(False)
 
     #päivitetään puiden määrä jos kentällä pystyi istuttamaan ja jos pelaaja vastasi oikein
-    if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
-        puu.update_puut(True)
-    elif mahdollisuus_puuhun== True:
-        puu.update_puut(False)
+if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
+    puu.update_puut(True)
+elif mahdollisuus_puuhun== True:
+    puu.update_puut(False)
 #else:
     #print("Karmasi loppui ja maailma tuhoutui :(")
