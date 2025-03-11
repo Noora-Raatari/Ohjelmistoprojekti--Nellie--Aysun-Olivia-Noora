@@ -81,6 +81,16 @@ def choose_airport():
             else:
                 print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
     return
+def etsi_puu():
+    kentän_puu= False
+    puun_sijainti = (
+        f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
+    if puun_sijainti in puun_sijainti:
+        print("Löysit puun")
+        kentän_puu = True
+    else:
+        print("Puuta ei ole saatavilla tällä lentokentällä")
+    return kentän_puu
 
 '''tässä on tietokantayhteys'''
 
@@ -123,7 +133,7 @@ class Karma:
 
 class Puu:
     def __init__(self):
-        self.puut = 5
+        self.puut = 0
 
     def update_puut(self, correct: bool):
         if correct:
@@ -133,17 +143,7 @@ class Puu:
             print("Et pysty kasvattamaan kentällä puuta :(")
 
 karma = Karma()
-
-
-def etsi_puu():
-    puun_sijainti = (
-        f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-    if puun_sijainti in puun_sijainti:
-        print("Löysit puun")
-    else:
-        print("Puuta ei ole saatavilla tällä lentokentällä")
-
-etsi_puu()
+mahdollisuus_puuhun= etsi_puu()
 
 
 random_airports = choose_airport()
@@ -159,7 +159,7 @@ else:
 
 puu = Puu()
 
-if pelaajan_vastaus == oikea_vastaus and puun_sijainti = (f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'"):
+if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
     puu.update_puut(True)
 else:
     puu.update_puut(False)
