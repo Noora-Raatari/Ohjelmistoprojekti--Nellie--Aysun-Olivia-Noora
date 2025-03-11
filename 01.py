@@ -80,7 +80,6 @@ else:
 class Karma:
     def __init__(self):
         self.pisteet = 100
-
     def update_karma(self, correct: bool):
         if correct:
             self.pisteet += 20
@@ -102,14 +101,13 @@ class Karma:
 
 class puu:
     def __init__(self):
-        self.puut = 0
-    def update_puut(self, correct: bool):
-        if correct:
-            self.puut += 1
-            print(f"Istutit kentällä puun!")
-        else:
-            self.puut += 0
-            print(f"Et pysty kasvattamaan kentällä puuta :(")
+        self.puut = 5
+        def update_puut(self, correct: bool):
+            if correct:
+                self.puut += 1
+                print(f"Istutit kentällä puun!")
+            else:
+                print(f"Et pysty kasvattamaan kentällä puuta :(")
 
 '''Lentokenttä'''
 
@@ -146,12 +144,16 @@ if random_airports:
             print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
 
 
-def puu():
-    puu = (f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-    if puu in random_airports:
-        return
+def etsi_puu():
+    puun_sijainti = (
+        f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
 
+    if puun_sijainti:
+        print("Puu löytyy tältä lentokentältä")
+    else:
+        print("Tältä lentokentältä ei löydy puuta.")
 
+puu()
 
 arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
@@ -165,9 +167,4 @@ if pelaajan_vastaus == oikea_vastaus:
 else:
     karma.update_karma(False)
 
-puu = puu()
 
-if pelaajan_vastaus == oikea_vastaus:
-    puu.update_puut(True)
-else:
-    puu.update_puut(False)
