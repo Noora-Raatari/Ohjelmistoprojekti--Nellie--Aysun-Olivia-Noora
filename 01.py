@@ -18,7 +18,7 @@ def tulosta_ohjeet ():
     ]
     for ohje in ohjeet:
         print(ohje)
-        time.sleep(0)
+        time.sleep(0.5)
 
 def hae_kysymys(id):
     sql = (f"SELECT kysymys from kysymykset where id={id}")
@@ -57,7 +57,7 @@ def vastausvaihtoehdot():
 
 def choose_airport():
     airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
-    print(airport)
+    #print(airport)
     kursori = yhteys.cursor()
     kursori.execute(airport)
     airport = kursori.fetchall()
@@ -108,10 +108,32 @@ yhteys = mysql.connector.connect(
 '''tästä alkaa pääohjelma'''
 
 tulosta_ohjeet()
-peli_loppui = False
 
 ''' Tässä on Karma ja Puut'''
+class Puu:
+    def __init__(self):
+        self.puut = 0
 
+    def update_puut(self, correct: bool):
+        if correct:
+            self.puut += 1
+            print("Istutit kentällä puun!")
+            print (f"Olet istuttanut {self.puut} puuta")
+        else:
+            print("Et pysty kasvattamaan kentällä puuta :(")
+        return self.puut
+    def puut_istutettu(self):
+        if self.puut == 5:
+            print("Sait istutettua kaikki 5 puuta! Onneksi olkoon!! Istutit tarpeeksi puita, jotta ilmaston lämpeneminen saadaan pysäytettyä!")
+            return True
+    def loppu_tarinat(self):
+
+        if self.puut <=1:
+            print("Et istuttanut tarpeeksi puita, etkä pystynyt vaikuttamaan ilmastonmuutoksen etenemiseen :(")
+        elif 2<= self.puut <=3:
+            print("Istutit vähän puita ja vain osa maailmasta selviytyi muuttuvasta ilmastosta")
+        elif  self.puut == 4:
+            print("Karmasi loppui, mutta onnistuit istuttamaan aika monta puuta!\n Pystyit pelastamaan suuren osan maailmaa lämpenevältä ilmastolta.")
 
 class Karma:
     def __init__(self):
@@ -135,50 +157,56 @@ class Karma:
             return False
         return True
 
-class Puu:
-    def __init__(self):
-        self.puut = 0
+    def karma_loppui(self):
+        if self.pisteet <= 0:
+            print("Karma on loppui!")
+            puu.loppu_tarinat()
+            return True
+        return False
 
-    def update_puut(self, correct: bool):
-        if correct:
-            self.puut += 1
-            print("Istutit kentällä puun!")
-        else:
-            print("Et pysty kasvattamaan kentällä puuta :(")
+
 
 
 #Karman alkuarvo:
 karma = Karma()
 #Puiden alkuarvo
 puu = Puu()
+peli_loppui = False
+puut_kerätty = False
 
 #Tästä alkaa pelin koko looppi
-#while
+while not (peli_loppui or puut_kerätty):
 
-    #Pelaaja saa valita lentokentän
-pelaajan_sijainti= choose_airport()
+        #Pelaaja saa valita lentokentän
+    pelaajan_sijainti= choose_airport()
 
-    #tarksitetaan onko kentällä puuta istutettavaksi
-mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
+        #tarksitetaan onko kentällä puuta istutettavaksi
+    mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
 
-    #Arvotaan kysymyspulma
-arvottu_numero= random.randint(1,47)
-hae_kysymys(arvottu_numero)
+        #Arvotaan kysymyspulma
+    arvottu_numero= random.randint(1,47)
+    hae_kysymys(arvottu_numero)
 
-    #pelaaja vastaa
-pelaajan_vastaus = vastausvaihtoehdot()
-oikea_vastaus = hae_vastaus(arvottu_numero)
+        #pelaaja vastaa
+    pelaajan_vastaus = vastausvaihtoehdot()
+    oikea_vastaus = hae_vastaus(arvottu_numero)
 
-    #Tarkistetaan onko pelaajan vastaus ja päivitetään karma
-if pelaajan_vastaus == oikea_vastaus:
-    karma.update_karma(True)
+        #Tarkistetaan onko pelaajan vastaus ja päivitetään karma
+    if pelaajan_vastaus == oikea_vastaus:
+        karma.update_karma(True)
+    else:
+        karma.update_karma(False)
+
+        #päivitetään puiden määrä jos kentällä pystyi istuttamaan ja jos pelaaja vastasi oikein
+    if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
+        puu.update_puut(True)
+    elif mahdollisuus_puuhun== True:
+        puu.update_puut(False)
+
+    if karma.karma_loppui():
+        peli_loppui = True
+
+    if puu.puut_istutettu():
+        puut_kerätty = True
 else:
-    karma.update_karma(False)
-
-    #päivitetään puiden määrä jos kentällä pystyi istuttamaan ja jos pelaaja vastasi oikein
-if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
-    puu.update_puut(True)
-elif mahdollisuus_puuhun== True:
-    puu.update_puut(False)
-#else:
-    #print("Karmasi loppui ja maailma tuhoutui :(")
+    print ("Peli on päättynyt")
