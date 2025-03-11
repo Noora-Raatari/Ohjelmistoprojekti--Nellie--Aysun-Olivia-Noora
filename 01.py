@@ -126,16 +126,20 @@ class Karma:
             return False
         return True
 
-class puu:
+class Puu:
     def __init__(self):
-        self.puut = 0
+        self.puut = 5
+
     def update_puut(self, correct: bool):
         if correct:
             self.puut += 1
-            print(f"Istutit kentällä puun!")
+            print("Istutit kentällä puun!")
         else:
-            self.puut += 0
-            print(f"Et pysty kasvattamaan kentällä puuta :(")
+            print("Et pysty kasvattamaan kentällä puuta :(")
+
+puu_obj = Puu()
+puu_obj.update_puut(True)  # Should add a tree
+print(puu_obj.puut)
 
 '''Lentokenttä'''
 
