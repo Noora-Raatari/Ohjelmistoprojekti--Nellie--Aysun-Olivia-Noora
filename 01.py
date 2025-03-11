@@ -148,13 +148,15 @@ print(puu_obj.puut)
 karma = Karma()
 
 
+def etsi_puu():
+    puun_sijainti = (
+        f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
+    if (puun_sijainti:
+    print("Löysit puun")
+    else:
+        print("Puuta ei ole saatavilla tällä lentokentällä")
 
-
-
-def puu():
-    puu = (f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-    if puu in random_airports:
-        return
+etsi_puu()
 
 
 random_airports = choose_airport()
