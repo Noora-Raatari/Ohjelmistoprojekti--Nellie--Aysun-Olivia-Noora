@@ -100,6 +100,16 @@ class Karma:
             return False
         return True
 
+class puu:
+    def __init__(self):
+        self.puut = 5
+        def update_puut(self, correct: bool):
+            if correct:
+                self.puut += 1
+                print(f"Istutit kentällä puun!")
+            else:
+                print(f"Et pysty kasvattamaan kentällä puuta :(")
+
 '''Lentokenttä'''
 
 def choose_airport():
@@ -134,6 +144,13 @@ if random_airports:
         else:
             print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
 
+
+def puu():
+    puu = (f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
+    if puu in random_airports:
+        return
+
+puu()
 
 arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
