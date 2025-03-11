@@ -81,15 +81,17 @@ def choose_airport():
             else:
                 print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
     return valittu_airport
+
 def etsi_puu(valittukenttä):
-    kentän_puu= False
-    puun_sijainti = (
-        f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-    if valittukenttä in puun_sijainti:
-        print("Löysit puun")
+    kentän_puu = False
+    puun_sijainti = f"SELECT name from airport WHERE name = '{valittukenttä}' AND (name LIKE 'M%' OR name LIKE 'S%' OR name LIKE 'H%' OR name LIKE 'J%')"
+    kursori = yhteys.cursor()
+    kursori.execute(puun_sijainti)
+    if kursori.fetchall():
+        print("Löysit puun!")
         kentän_puu = True
     else:
-        print("Puuta ei ole saatavilla tällä lentokentällä")
+        print("Puuta ei ole saatavilla tällä lentokentällä.")
     return kentän_puu
 
 '''tässä on tietokantayhteys'''
@@ -106,12 +108,14 @@ yhteys = mysql.connector.connect(
 '''tästä alkaa pääohjelma'''
 
 tulosta_ohjeet()
+peli_loppui = False
+
+''' Tässä on Karma ja Puut'''
 
 
 class Karma:
     def __init__(self):
         self.pisteet = 100
-
     def update_karma(self, correct: bool):
         if correct:
             self.pisteet += 20
@@ -142,25 +146,39 @@ class Puu:
         else:
             print("Et pysty kasvattamaan kentällä puuta :(")
 
+
+#Karman alkuarvo:
 karma = Karma()
-
-
-pelaajan_sijainti= choose_airport()
-mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
-arvottu_numero= random.randint(1,47)
-hae_kysymys(arvottu_numero)
-pelaajan_vastaus = vastausvaihtoehdot()
-oikea_vastaus = hae_vastaus(arvottu_numero)
-
-
-if pelaajan_vastaus == oikea_vastaus:
-    karma.update_karma(True)
-else:
-    karma.update_karma(False)
-
+#Puiden alkuarvo
 puu = Puu()
 
-if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
-    puu.update_puut(True)
-elif mahdollisuus_puuhun== True:
-    puu.update_puut(False)
+#Tästä alkaa pelin koko looppi
+#while
+
+    #Pelaaja saa valita lentokentän
+    pelaajan_sijainti= choose_airport()
+
+    #tarksitetaan onko kentällä puuta istutettavaksi
+    mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
+
+    #Arvotaan kysymyspulma
+    arvottu_numero= random.randint(1,47)
+    hae_kysymys(arvottu_numero)
+
+    #pelaaja vastaa
+    pelaajan_vastaus = vastausvaihtoehdot()
+    oikea_vastaus = hae_vastaus(arvottu_numero)
+
+    #Tarkistetaan onko pelaajan vastaus ja päivitetään karma
+    if pelaajan_vastaus == oikea_vastaus:
+        karma.update_karma(True)
+    else:
+        karma.update_karma(False)
+
+    #päivitetään puiden määrä jos kentällä pystyi istuttamaan ja jos pelaaja vastasi oikein
+    if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
+        puu.update_puut(True)
+    elif mahdollisuus_puuhun== True:
+        puu.update_puut(False)
+#else:
+    #print("Karmasi loppui ja maailma tuhoutui :(")
