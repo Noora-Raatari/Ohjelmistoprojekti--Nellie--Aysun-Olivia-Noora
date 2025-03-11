@@ -161,5 +161,5 @@ puu = Puu()
 
 if pelaajan_vastaus == oikea_vastaus and mahdollisuus_puuhun == True:
     puu.update_puut(True)
-else:
+elif mahdollisuus_puuhun== True:
     puu.update_puut(False)
