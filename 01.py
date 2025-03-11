@@ -147,7 +147,7 @@ karma = Karma()
 def etsi_puu():
     puun_sijainti = (
         f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-    if (puun_sijainti:
+    if puun_sijainti in puun_sijainti:
     print("Löysit puun")
     else:
         print("Puuta ei ole saatavilla tällä lentokentällä")
