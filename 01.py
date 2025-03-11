@@ -137,10 +137,6 @@ class Puu:
         else:
             print("Et pysty kasvattamaan kentällä puuta :(")
 
-puu_obj = Puu()
-puu_obj.update_puut(True)  # Should add a tree
-print(puu_obj.puut)
-
 '''Lentokenttä'''
 
 
