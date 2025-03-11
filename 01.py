@@ -159,7 +159,7 @@ else:
 
 puu = Puu()
 
-if pelaajan_vastaus == oikea_vastaus:
+if pelaajan_vastaus == oikea_vastaus and puun_sijainti = (f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'"):
     puu.update_puut(True)
 else:
     puu.update_puut(False)
