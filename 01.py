@@ -167,4 +167,8 @@ if pelaajan_vastaus == oikea_vastaus:
 else:
     karma.update_karma(False)
 
-
+puu = puu()
+if pelaajan_vastaus == oikea_vastaus:
+    puu.update_puu(True)
+else:
+    karma.update_puu(False)
