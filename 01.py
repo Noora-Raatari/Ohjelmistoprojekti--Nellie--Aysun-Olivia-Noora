@@ -55,6 +55,32 @@ def vastausvaihtoehdot():
             print("Vastaus ei ole kelvollinen. Yritä uudelleen.")
     return pelaajan_vastaus
 
+def choose_airport():
+    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
+    print(airport)
+    kursori = yhteys.cursor()
+    kursori.execute(airport)
+    airport = kursori.fetchall()
+    random_airports = random.sample(airport, 3)
+    jono = 1
+    print(f"Valitse seuraava kohteesi!")
+    for kenttä in random_airports:
+        print(f"{jono}. {kenttä[0]}")
+        jono += 1
+    if random_airports:
+        while True:
+            valitse = int(input("(1-3): "))
+            if 1 <= valitse <= 3:
+                valittu_airport = random_airports[valitse - 1][0]
+                print(f"Matkasi jatkuu lentokentälle: {valittu_airport}")
+                if karma.lento():
+                    break
+                else:
+                    print("Ei tarpeeksi karmaa lentämiseen, et voi lentää.")
+                    break
+            else:
+                print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
+    return
 
 '''tässä on tietokantayhteys'''
 
@@ -63,7 +89,7 @@ yhteys = mysql.connector.connect(
          port= 3306,
          database='peli',
          user='root',
-         password='tuut',
+         password='läppäri',
          autocommit=True
          )
 
@@ -80,6 +106,7 @@ else:
 class Karma:
     def __init__(self):
         self.pisteet = 100
+
     def update_karma(self, correct: bool):
         if correct:
             self.pisteet += 20
@@ -101,60 +128,32 @@ class Karma:
 
 class puu:
     def __init__(self):
-        self.puut = 5
-        def update_puut(self, correct: bool):
-            if correct:
-                self.puut += 1
-                print(f"Istutit kentällä puun!")
-            else:
-                print(f"Et pysty kasvattamaan kentällä puuta :(")
+        self.puut = 0
+    def update_puut(self, correct: bool):
+        if correct:
+            self.puut += 1
+            print(f"Istutit kentällä puun!")
+        else:
+            self.puut += 0
+            print(f"Et pysty kasvattamaan kentällä puuta :(")
 
 '''Lentokenttä'''
 
-def choose_airport():
-    airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
-    print(airport)
-    kursori = yhteys.cursor()
-    kursori.execute(airport)
-    airport = kursori.fetchall()
-    random_airports = random.sample(airport, 3)
-    jono = 1
-    print(f"Valitse seuraava kohteesi!")
-    for kenttä in random_airports:
-        print(f"{jono}. {kenttä[0]}")
-        jono += 1
 
-    return random_airports
 
 karma = Karma()
+
+
+
+
+
+def puu():
+    puu = (f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
+    if puu in random_airports:
+        return
+
+
 random_airports = choose_airport()
-
-if random_airports:
-    while True:
-        valitse = int(input("(1-3): "))
-        if 1 <= valitse <= 3:
-            valittu_airport = random_airports[valitse - 1][0]
-            print(f"Matkasi jatkuu lentokentälle: {valittu_airport}")
-            if karma.lento():
-                break
-            else:
-                print("Ei tarpeeksi karmaa lentämiseen, et voi lentää.")
-                break
-        else:
-            print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
-
-
-def etsi_puu():
-    puun_sijainti = (
-        f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-
-    if puun_sijainti:
-        print("Puu löytyy tältä lentokentältä")
-    else:
-        print("Tältä lentokentältä ei löydy puuta.")
-
-puu()
-
 arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
@@ -168,7 +167,8 @@ else:
     karma.update_karma(False)
 
 puu = puu()
+
 if pelaajan_vastaus == oikea_vastaus:
-    puu.update_puu(True)
+    puu.update_puut(True)
 else:
-    karma.update_puu(False)
+    puu.update_puut(False)
