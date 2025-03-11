@@ -80,12 +80,12 @@ def choose_airport():
                     break
             else:
                 print("Virheellinen arvo, valitse numeroista 1, 2 tai 3.")
-    return
-def etsi_puu():
+    return valittu_airport
+def etsi_puu(valittukenttä):
     kentän_puu= False
     puun_sijainti = (
         f"select name from airport where iso_country = 'FI' AND name like '%airport%' and name like 'M%' or iso_country = 'FI' AND name like '%airport%' and name like 'S%' or iso_country = 'FI' AND name like '%airport%' and name like 'H%' or iso_country = 'FI' AND name like '%airport%' and name like 'J%'")
-    if puun_sijainti in puun_sijainti:
+    if valittukenttä in puun_sijainti:
         print("Löysit puun")
         kentän_puu = True
     else:
@@ -143,14 +143,15 @@ class Puu:
             print("Et pysty kasvattamaan kentällä puuta :(")
 
 karma = Karma()
-mahdollisuus_puuhun= etsi_puu()
 
 
-random_airports = choose_airport()
+pelaajan_sijainti= choose_airport()
+mahdollisuus_puuhun= etsi_puu(pelaajan_sijainti)
 arvottu_numero= random.randint(1,47)
 hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
 oikea_vastaus = hae_vastaus(arvottu_numero)
+
 
 if pelaajan_vastaus == oikea_vastaus:
     karma.update_karma(True)
