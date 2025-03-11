@@ -97,11 +97,6 @@ yhteys = mysql.connector.connect(
 
 tulosta_ohjeet()
 
-'''if pelaajan_vastaus==oikea_vastaus:
-    print("Jee oikein")
-else:
-    print("väärin :(")'''
-
 
 class Karma:
     def __init__(self):
@@ -137,10 +132,6 @@ class Puu:
         else:
             print("Et pysty kasvattamaan kentällä puuta :(")
 
-'''Lentokenttä'''
-
-
-
 karma = Karma()
 
 
@@ -161,14 +152,12 @@ hae_kysymys(arvottu_numero)
 pelaajan_vastaus = vastausvaihtoehdot()
 oikea_vastaus = hae_vastaus(arvottu_numero)
 
-
-karma = Karma()
 if pelaajan_vastaus == oikea_vastaus:
     karma.update_karma(True)
 else:
     karma.update_karma(False)
 
-puu = puu()
+puu = Puu()
 
 if pelaajan_vastaus == oikea_vastaus:
     puu.update_puut(True)
