@@ -159,7 +159,7 @@ class Karma:
 
     def karma_loppui(self):
         if self.pisteet <= 0:
-            print("Karma on loppui!")
+            print("Karma loppui!")
             puu.loppu_tarinat()
             return True
         return False
