@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>meidän peli</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body class="body">
+    <header>
+        <h1>PELIN OTSIKKO :)</h1>
+    </header>
+    <main>
+        <!-- pop-upikkuna 1: ohjeet -->
+        <div class="modal" id="modal1" >
+            <div class="modal-header">
+                <div class="modal-otsikko">Ohjeet</div><div data-close-button class="close-button">&times;</div>
+            </div>
+            <div class="modal-teksti">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto fuga in quidem! Tenetur quo, id quia debitis odit voluptates! Sint dolorum optio eligendi odio architecto quos amet, ipsa placeat, fuga quas est dolorem eum asperiores fugit iste similique nihil quidem eos delectus modi animi? Harum, deserunt sapiente possimus fugit officiis quasi numquam obcaecati consectetur quisquam, aliquam veritatis esse quos illo placeat ipsa ad corrupti. Ullam quibusdam facilis dolorem, facere quam eaque ipsam ea consectetur doloribus non nulla veritatis impedit dicta?
+            </div>
+          </div>
+
+          <!-- pop-up ikkuna 2: tekijät :) -->
+          <div class="modal" id="modal2" >
+            <div class="modal-header">
+                <div class="modal-otsikko">Tekijät</div><div data-close-button class="close-button">&times;</div>
+            </div>
+            <div class="modal-teksti">
+                Aysun, Nellie, Noora, Olivia
+            </div>
+          </div>
+        
+        <!-- valikon painikkeet -->
+          <nav>
+          <div class="valikko">
+            <div class="painikkeet">
+              <a href="pelisivu.html" >Pelaa</a>
+              <a data-modal-target="#modal1">Ohjeet</a>
+             
+              <a data-modal-target="#modal2">Tekijät</a>
+            </div>
+          </div>
+        </nav>
+    </main>
+    <script></script>
+  </body>
+</html>
