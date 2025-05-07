@@ -30,34 +30,29 @@ function closeModal(modal){
 
 let kenttaMarkers = []; // Taulukko kartan merkkejä varten
 
-// Alustetaan kartta
-const map = L.map('map').setView([65.0121, 25.4651], 5); // Suomi keskellä
+const map = L.map('map').setView([65.0121, 25.4651], 5);
 
-// Lisätään OpenStreetMap taustakartta
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
 }).addTo(map);
 
-// Funktio, joka tyhjentää kartan ja arpoo uudet kentät
+// tyhjentää kartan ja arpoo uudet markit
 function arvoUudetKentat() {
-    // Tyhjennetään kaikki aikaisemmat merkit
     kenttaMarkers.forEach(marker => {
-        map.removeLayer(marker);  // Poistetaan merkit kartalta
+        map.removeLayer(marker);  // poistaa merkit
     });
-    kenttaMarkers = []; // Tyhjennetään taulukko
+    kenttaMarkers = []; //
 
-    // Haetaan uudet kentät
+    // hakee uudet kentät
     fetch("/get_airports")
         .then(response => response.json())
         .then(data => {
-            // Arvotaan satunnaisesti 3 kenttää
             const arvotutKentat = data.sort(() => Math.random() - 0.5).slice(0, 3);
 
-            // Lisätään uudet kentät kartalle
             arvotutKentat.forEach(kentta => {
                 const marker = L.marker([kentta.lat, kentta.lng]).addTo(map);
                 marker.bindPopup(`<button onclick="valitseKentta('${kentta.name}')">${kentta.name}</button>`);
-                kenttaMarkers.push(marker); // Lisätään merkki taulukkoon
+                kenttaMarkers.push(marker);
             });
         })
         .catch(error => {
@@ -65,20 +60,19 @@ function arvoUudetKentat() {
         });
 }
 
-// Funktio, joka valitsee kentän ja hakee kysymyksen
+// valitsee kentät ja hakee kysymyksen
 function valitseKentta(nimi) {
-    valittuKentta = nimi; // Tallennetaan valittu kenttä
-    haeKysymys(); // Haetaan seuraava kysymys
+    valittuKentta = nimi;
+    haeKysymys();
 }
 
-// Funktio, joka hakee kysymyksen ja näyttää sen
+// tulosstaa uuden kysymyksen
 function haeKysymys() {
     fetch("/get_question")
         .then(res => res.json())
         .then(data => {
-            console.log("Kysymys haettu:", data); // Debug: tulostetaan kysymys
+            console.log("Kysymys haettu:", data);
 
-            // Päivitetään kysymys ja formi HTML:ään
             nykyinenKysymysID = data.id;
             const kysymysBox = document.querySelector(".pelivalikko");
             kysymysBox.innerHTML = `
@@ -96,13 +90,12 @@ function haeKysymys() {
         });
 }
 
-// Funktio, joka lähettää vastauksen palvelimelle
+// lähettää vastauksen
 function lahetaVastaus(e) {
     e.preventDefault();
     const valittu = document.querySelector('input[name="vastaus"]:checked');
     if (!valittu) return alert("Valitse vastaus!");
 
-    // Lähetetään vastaus palvelimelle
     fetch("/submit_answer", {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
@@ -120,10 +113,10 @@ function lahetaVastaus(e) {
         }
         document.querySelector(".pelivalikko").innerHTML += `<p>${tulos}</p>`;
 
-        // Arvotaan uudet kentät
+        // arppoo uudet kentät
         arvoUudetKentat();
     });
 }
 
-// Alustetaan kentät alussa
+// alku
 arvoUudetKentat();

@@ -82,7 +82,7 @@ def get_airports():
 
 
 def istutetaanko_puu(kentta):
-    # Sama logiikka kuin aiemmassa: tarkastetaan alkukirjain
+    #tarkistetaan onko oikeella alkukirjaimella alkava
     return kentta[0] in "MSHJ"
 
 if __name__ == "__main__":
