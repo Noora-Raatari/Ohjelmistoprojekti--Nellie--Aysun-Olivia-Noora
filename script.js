@@ -1,4 +1,3 @@
-
 // Pop- up ikkunat aloitussivulla
 
 const avaaPopUpPainike = document.querySelectorAll('[data-modal-target]')
