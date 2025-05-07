@@ -1,6 +1,9 @@
 import mysql.connector
 import random
 import time
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
 
 '''tässä on funktiot'''
 
@@ -21,39 +24,47 @@ def tulosta_ohjeet ():
         time.sleep(0.5)
 
 def hae_kysymys(id):
-    sql = (f"SELECT kysymys from kysymykset where id={id}")
-    #print (sql)
-    kursori =yhteys.cursor()
-    kursori.execute(sql)
-    tulos=kursori.fetchall()
-    if kursori.rowcount > 0:
-      for i in tulos:
-          print (f" {i}")
-    else:
-        print ("")
-def hae_vastaus(id):
-    sql = (f"SELECT vastaus from kysymykset where id={id}")
-    #print (sql)
-    kursori =yhteys.cursor()
-    kursori.execute(sql)
-    tulos=kursori.fetchall()
-    if kursori.rowcount > 0:
-      for i in tulos:
-        oikea_vastaus_str = i[0].strip().lower()
-        print(oikea_vastaus_str)
-    else:
-      print("Vastausta ei löytynyt")
-      return None
-    return oikea_vastaus_str
+    kursori = yhteys.cursor()
+    kursori.execute("SELECT kysymys FROM kysymykset WHERE id = %s", (id,))
+    rivi = kursori.fetchone()
+    kursori.close()
+    return rivi[0] if rivi else None
 
-def vastausvaihtoehdot():
-    while True:
-        pelaajan_vastaus = input("Onko väite totta vai tarua?: ").strip().lower()
-        if pelaajan_vastaus in ['totta', 'tarua']:
-            return pelaajan_vastaus
-        else:
-            print("Vastaus ei ole kelvollinen. Yritä uudelleen.")
-    return pelaajan_vastaus
+def hae_vastaus(id):
+    kursori = yhteys.cursor()
+    kursori.execute("SELECT vastaus FROM kysymykset WHERE id = %s", (id,))
+    rivi = kursori.fetchone()
+    kursori.close()
+    return rivi[0].strip().lower() if rivi else None
+
+
+@app.route("/api/kysymys")
+def hae_satunnainen_kysymys():
+    kursori = yhteys.cursor()
+    kursori.execute("SELECT id, kysymys FROM kysymykset ORDER BY RAND() LIMIT 1")
+    rivi = kursori.fetchone()
+    kursori.close()
+    if rivi:
+        return jsonify({"id": rivi[0], "kysymys": rivi[1]})
+    return jsonify({"kysymys": None})
+
+@app.route("/api/tarkista", methods=["POST"])
+def tarkista_vastaus():
+    data = request.json
+    kysymys_id = data.get("id")
+    pelaajan_vastaus = data.get("vastaus", "").strip().lower()
+    oikea_vastaus = hae_vastaus(kysymys_id)
+    if oikea_vastaus is None:
+        return jsonify({"tilanne": "Virhe", "viesti": "Vastausta ei löytynyt"})
+    oikein = pelaajan_vastaus == oikea_vastaus
+    return jsonify({"oikein": oikein, "oikea_vastaus": oikea_vastaus})
+
+@app.route("/")
+def pelisivu():
+    return render_template("pelisivu.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
 
 def choose_airport():
     airport = (f"SELECT name from airport where iso_country = 'FI' and name like '%Airport%'")
@@ -100,9 +111,9 @@ yhteys = mysql.connector.connect(
          host='localhost',
          port= 3306,
          database='peli',
-         user='root',
-         password='läppäri',
-         autocommit=True
+         user='aysunlol',
+         password='entiia',
+         autocommit=True,
          )
 
 '''tästä alkaa pääohjelma'''
@@ -138,33 +149,26 @@ class Puu:
 class Karma:
     def __init__(self):
         self.pisteet = 100
-    def update_karma(self, correct: bool):
+
+    def update_karma(self, correct):
         if correct:
             self.pisteet += 20
-            print("Oikein! +20 karmaa.")
+            return "Oikein! +20 karmaa."
         else:
             self.pisteet -= 20
-            print("Väärin! -20 karmaa.")
-        print(f"Sinulla on nyt {self.pisteet} karmaa.\n")
+            return "Väärin! -20 karmaa."
 
     def lento(self):
         if self.pisteet >= 10:
             self.pisteet -= 10
-            print("Lentosi hinta: -10 karmaa.")
-            print(f"Sinulla on nyt {self.pisteet} karmaa.")
+            return "Lentosi hinta: -10 karmaa."
         else:
-            print("Ei tarpeeksi karmaa lentämiseen!")
-            return False
-        return True
+            return "Ei tarpeeksi karmaa lentämiseen!"
 
     def karma_loppui(self):
-        if self.pisteet <= 0:
-            print("Karma loppui!")
-            puu.loppu_tarinat()
-            return True
-        return False
+        return self.pisteet <= 0
 
-
+karma = Karma()
 
 
 #Karman alkuarvo:
@@ -210,3 +214,4 @@ while not (peli_loppui or puut_kerätty):
         puut_kerätty = True
 else:
     print ("Peli on päättynyt")
+

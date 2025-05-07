@@ -9,6 +9,9 @@
 <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" defer></script>
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='app.js') }}" defer></script>
+
 </head>
 <body class="body">
     <header>
@@ -17,8 +20,17 @@
         </div>
     </header>
     <section class="container">
-        <div class="pelivalikko">tähän tulee pelivalikko ja itse peli toimii tämän divin sisällä</div>
+        <div class="pelivalikko">
+    <h2 style="font-size: 1.2rem; margin-bottom: 10px;">Totta vai tarua?</h2>
+    <div id="question" style="margin-bottom: 10px;">Ladataan kysymystä...</div>
 
+    <input type="text" id="answer" placeholder="Kirjoita 'totta' tai 'tarua'"
+        style="width: 100%; padding: 5px; margin-bottom: 10px;" />
+
+    <button onclick="submitAnswer()" style="width: 100%; padding: 6px;">Lähetä vastaus</button>
+
+    <div id="confirmation" style="margin-top: 10px; font-weight: bold;"></div>
+</div>
         <div id="map">tähän tulee karttanäkymä</div>
     </section>
     <script></script>
