@@ -1,0 +1,139 @@
+/* Tässä tyylit jotka määrittää koko dokumenttia \*/
+
+body {
+margin: 0;
+padding: 1rem;
+background-color: #75295c;
+}
+
+@media (max-width: 800px) {
+/*koko sivun responsiivisuus, laittaa columnit päällekäin kapeammalla näytöllä*/
+.container {
+grid-template-columns: 1fr;
+}
+}
+
+header {
+text-align: center;
+font-size: 2.5rem;
+}
+
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* tästä eteenpäin tyylit, jotka määrittävät PELISIVU sivun \*/
+
+.container {
+/* laatikko, joka sisältää kaksi columnia: pelivalikon ja kartan \*/
+
+margin: auto;
+width: 90%;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
+}
+
+.pelivalikko {
+padding: 1rem;
+border-radius: 8px;
+background-color: hsl(240, 62%, 90%);
+    height: 100%;
+}
+#map {
+padding: 1rem;
+border-radius: 8px;
+background-color: hsl(240, 62%, 90%);
+    min-height: 300px;
+    height: 100%;
+}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* tässä eteenpäin tyylit, jotka määrittävät INDEX sivun   \*/
+
+nav {
+width: 90%;
+margin: auto;
+}
+.valikko {
+/*valikko, joka on keskellä sivua*/
+padding: 2rem;
+margin: auto;
+background-color: hsl(240, 62%, 90%);
+border-radius: 8px;
+}
+
+.painikkeet {
+/*laatikko, joka sisältää painikkeet ja määrää niiden leveyden*/
+margin: auto;
+width: 30%;
+text-align: center;
+}
+
+.painikkeet a,
+link,
+a:visited {
+/* itse nappulat \*/
+border-radius: 3rem;
+margin: auto;
+margin-bottom: 2rem;
+background-color: #eba2a2;
+box-shadow: 10px 10px 5px rgba(58, 39, 53, 0.288);
+border: 5px solid rgb(255, 255, 255);
+color: white;
+padding: 2rem;
+cursor: pointer;
+text-decoration: none;
+width: 50%;
+display: block;
+}
+
+.painikkeet a\:last-child {
+/*viimeisestä nappulasta margin pohjalta pois*/
+margin-bottom: 0;
+}
+.painikkeet a\:hover {
+/* hover väri napeille \*/
+background-color: rgb(186, 152, 219);
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// \*/
+
+/* pop-up ikkuna \*/
+.modal {
+top: 40%;
+left: 50%;
+transform: translate(-50%, -50%) scale(0);
+transition: 200ms ease-in-out;
+position: fixed;
+border: 5px solid rgb(255, 255, 255);
+border-radius: 8px;
+z-index: 10;
+background-color: hsl(240, 62%, 90%);
+width: 50%;
+}
+
+.modal.active {
+transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+/*pop-up ikkunan header*/
+padding: 1.5rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.modal-otsikko {
+/*pop-up ikkunan headerin otsikko*/
+font-size: 2rem;
+}
+.close-button {
+/*x-painike*/
+cursor: pointer;
+font-size: 2rem;
+font-weight: bold;
+}
+.modal-teksti {
+/*leipäteksti pop-up ikkunan sisällä*/
+padding: 1.5rem;
+text-align: center;
+}
