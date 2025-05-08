@@ -63,6 +63,16 @@ function arvoUudetKentat() {
 // valitsee kentät ja hakee kysymyksen
 function valitseKentta(nimi) {
     valittuKentta = nimi;
+
+    // onko kenttä puukenttä
+    const Kentannimi = nimi.charAt(0).toUpperCase();
+    const PuuSaatavilla = document.getElementById("puutiedote");
+    if ("MSHJ".includes(Kentannimi)){
+        puutiedote.innerText = `Löysit puun! Vastaa oikein niin voit istuttaa sen kentälle`;
+    }
+    else {
+        puutiedote.innerText = `Puuta ei ole saatavilla tällä kentällä`
+    }
     haeKysymys();
 }
 
@@ -107,9 +117,10 @@ function lahetaVastaus(e) {
     })
     .then(res => res.json())
     .then(data => {
-        let tulos = `Vastasit ${data.oikein ? "oikein" : "väärin"}! Karma: ${data.karma}, Puut: ${data.puut}`;
+        let tulos = ` ${data.oikein ? "oikein" : "väärin"}! Karmaa nyt ${data.karma}, Olet istuttanut ${data.puut} puuta`;
         if (data.istutettu && data.oikein) {
-            tulos += " — Istutit puun!";
+            tulos += `<br>Onnistuit istuttamaan puun kentälle!"
+            <img src ="static/animaatio.gif" alt="puu kasvaa" style="width:250px; height:auto; margin-left:8rem; margin-top: 4rem;">`;
         }
         document.querySelector(".pelivalikko").innerHTML += `<p>${tulos}</p>`;
 

@@ -14,14 +14,16 @@
 <body class= "body">
     <header>
         <div class="otsikko">
-            <h1 class="pelin-otsikko">Trivial PUUrsuit</h1>
+            <img src ="{{ url_for ('static',filename='logo.png')}}">
         </div>
     </header>
     <section class="container">
         <div class="pelivalikko">Valitse lentokenttä ja vastaa kysymykseen</div>
+<div id="puutiedote"></div>
+
+    <div id="map"></div>
 
 
-    <div id="map">tähän tulee karttanäkymä</div>
 </section>
 <script></script>
 </body>

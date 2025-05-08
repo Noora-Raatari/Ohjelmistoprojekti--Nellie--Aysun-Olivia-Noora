@@ -3,7 +3,9 @@
 body {
 margin: 0;
 padding: 1rem;
-background-color: #75295c;
+    background-image: url("tausta01.jpg");
+    background-size: cover;
+background-color: #91b0bd;
 }
 
 @media (max-width: 800px) {
@@ -45,10 +47,19 @@ background-color: hsl(240, 62%, 90%);
     height: 100%;
 }
 
+#puutiedote{
+    padding:1rem;
+    position: fixed;
+    margin-top: 13rem;
+
+}
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////////// */
 /* tässä eteenpäin tyylit, jotka määrittävät INDEX sivun   \*/
-
+header img{
+    height: 10rem;
+    margin: auto;
+}
 nav {
 width: 90%;
 margin: auto;
@@ -76,7 +87,6 @@ border-radius: 3rem;
 margin: auto;
 margin-bottom: 2rem;
 background-color: #eba2a2;
-box-shadow: 10px 10px 5px rgba(58, 39, 53, 0.288);
 border: 5px solid rgb(255, 255, 255);
 color: white;
 padding: 2rem;
@@ -90,9 +100,10 @@ display: block;
 /*viimeisestä nappulasta margin pohjalta pois*/
 margin-bottom: 0;
 }
-.painikkeet a\:hover {
+.painikkeet a:hover {
 /* hover väri napeille \*/
 background-color: rgb(186, 152, 219);
+    box-shadow: 10px 10px 5px rgba(58, 39, 53, 0.100);
 }
 
 /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// \*/
